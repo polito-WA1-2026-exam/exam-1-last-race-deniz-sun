@@ -1,0 +1,61 @@
+@baseUrl = http://localhost:3001/api
+
+### 1. AUTHENTICATION
+
+### 1a. Login as 'mario' (Password is 'password' as seeded in dbSetup.js)
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+    "username": "mario",
+    "password": "password"
+}
+
+### 1b. Check if currently logged in
+GET {{baseUrl}}/sessions/current
+
+### 2. FETCHING GAME DATA (Requires Login)
+
+### 2a. Get the full network (stations and valid segments)
+GET {{baseUrl}}/network
+
+### 2b. Get the leaderboard rankings
+GET {{baseUrl}}/rankings
+
+### 3. PLAYING THE GAME (Requires Login)
+
+### 3a. Initialize a new game (Server picks random Start and Dest)
+POST {{baseUrl}}/games/init
+
+### 3b. Submit a route (TEST 1: PERFECT VALID ROUTE)
+POST {{baseUrl}}/games/submit
+Content-Type: application/json
+
+{
+    "gameData": {
+        "startStation": { "id": 1, "name": "Centrale" },
+        "destStation": { "id": 4, "name": "Piazza delle Lanterne" }
+    },
+    "route": [1, 2, 3, 4]
+}
+
+### 3c. Submit a route (TEST 2: INVALID ROUTE)
+# Submitting an invalid route (e.g., segment doesn't exist, like 1 to 8 directly)
+# This should return a 422 Unprocessable Entity and 0 points.
+POST {{baseUrl}}/games/submit
+Content-Type: application/json
+
+{
+    "gameData": {
+        "startStation": { "id": 1, "name": "Centrale" },
+        "destStation": { "id": 4, "name": "Piazza delle Lanterne" }
+    },
+    "route": [1, 8, 4]
+}
+
+
+### 4a. Logout
+DELETE {{baseUrl}}/sessions/current
+
+### 4b. Verify Logout (Should return 401 Not Authenticated)
+GET {{baseUrl}}/network
