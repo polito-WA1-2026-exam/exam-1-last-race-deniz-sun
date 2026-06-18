@@ -71,7 +71,7 @@ async function setupDatabase() {
 
     console.log("Seeding data...");
 
-    const users = ['mario', 'luigi', 'peach'];
+    const users = ['blossom', 'buttercup', 'bubbles'];
     for (const u of users) {
         const { salt, hash } = hashPassword('password');
         await db.run('INSERT INTO users (username, password, salt) VALUES (?, ?, ?)', [u, hash, salt]);
