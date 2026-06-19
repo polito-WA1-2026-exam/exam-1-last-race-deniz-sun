@@ -4,7 +4,7 @@ import './App.css';
 
 import { useEffect, useState } from 'react';
 import { Container, Toast, ToastBody, Spinner } from 'react-bootstrap';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 
 import Header from "./components/Header.jsx";
 import { LoginForm } from './components/Auth.jsx';
@@ -19,6 +19,7 @@ import React from 'react';
 export const FeedbackContext = React.createContext();
 
 function App() {
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true); // Prevents flickering on refresh
@@ -59,6 +60,7 @@ function App() {
         setLoggedIn(false); 
         setUser(null);
         setFeedback("Logged out successfully.");
+        navigate('/'); 
     };
 
     if (loading) return <div className="vh-100 d-flex justify-content-center align-items-center"><Spinner animation="border" variant="primary" /></div>;
