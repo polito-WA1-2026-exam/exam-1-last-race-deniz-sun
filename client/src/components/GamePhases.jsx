@@ -7,19 +7,53 @@ import { useNavigate } from 'react-router-dom';
 
 export function SetupPhase({ network, onStart }) {
     return (
-        <Card className="pastel-card p-4 text-center">
-            <h2 className="mb-4 text-primary">Network Map</h2>
-            <div className="mb-4 border rounded p-2 shadow-sm bg-white" style={{ transform: "scale(0.75)", transformOrigin: "top center" }}>
-                    <NetworkMap network={network} showLines={true} />
-            </div>
-            <div>
-                <Button variant="primary" size="lg" className="px-5 py-3 shadow-sm" onClick={onStart}>
-                    <i className="bi bi-play-circle fs-4 me-2"></i> <span className="fs-5">Start Game</span>
-                </Button>
-            </div>
+        <Card className="pastel-card p-4 shadow-lg">
+            <Row className="align-items-stretch">
+                
+                {/* LEFT SIDE: Rules & Start Button  */}
+                <Col md={5} lg={4} className="d-flex flex-column justify-content-between pe-md-4 mb-4 mb-md-0">
+                    <div>
+                        <h2 className="mb-4" style={{ color: 'var(--bs-primary)', fontWeight: 'bold' }}>
+                            <i className="bi bi-train-front"></i> Race the Rails
+                        </h2>
+                        
+                        <h5 className="text-secondary mb-3">
+                            <i className="bi bi-book"></i> Mission Briefing
+                        </h5>
+                        
+                        <ul className="text-muted fs-6" style={{ lineHeight: '1.8', paddingLeft: '1.2rem' }}>
+                            <li>You start the journey with <strong>20 coins</strong>.</li>
+                            <li>You will be randomly assigned a <strong>Start</strong> and <strong>Destination</strong> station.</li>
+                            <li>You have exactly <strong>90 seconds</strong> to reconstruct the network and plan a continuous route.</li>
+                            <li>Every segment triggers a <strong>random event</strong> which may grant or steal coins.</li>
+                            <li><span className="text-danger fw-bold">Beware:</span> Submitting a disconnected or invalid route results in <strong>0 coins</strong>!</li>
+                        </ul>
+                    </div>
+
+                    <Button 
+                        variant="primary" 
+                        size="lg" 
+                        className="w-100 shadow-sm mt-4 py-3" 
+                        onClick={onStart}
+                        style={{ borderRadius: '12px' }}
+                    >
+                        <i className="bi bi-play-circle-fill fs-4 me-2"></i> <span className="fs-5">Start Race</span>
+                    </Button>
+                </Col>
+
+                {/* RIGHT SIDE: The Map  */}
+                <Col md={7} lg={8}>
+                    <div className="h-100 border rounded p-3 shadow-sm" style={{ backgroundColor: '#ffffff' }}>
+                        <h5 className="text-center text-muted mb-3">Network Map</h5>
+                        <NetworkMap network={network} showLines={true} />
+                    </div>
+                </Col>
+
+            </Row>
         </Card>
     );
 }
+
 
 export function ExecutionPhase({ result, onComplete }) {
     const [step, setStep] = useState(0);
