@@ -79,3 +79,13 @@ export async function getRankings() {
     `;
     return await db.all(query);
 }
+
+export async function getUserHistory(userId) {
+    const query = `
+        SELECT id, score, timestamp 
+        FROM games 
+        WHERE user_id = ? 
+        ORDER BY timestamp DESC
+    `;
+    return await db.all(query, [userId]);
+}

@@ -3,6 +3,7 @@ import { Row, Col, Card, Table, Spinner, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import API from '../api/api';
 import { FeedbackContext } from '../App';
+import dayjs from 'dayjs';
 
 export function HomeLayout({ loggedIn }) {
     const navigate = useNavigate();
@@ -71,6 +72,56 @@ export function RankingsLayout() {
                             ))}
                             {rankings.length === 0 && (
                                 <tr><td colSpan="3">No games played yet!</td></tr>
+                            )}
+                        </tbody>
+                    </Table>
+                </Card>
+            </Col>
+        </Row>
+    );
+}
+
+export function HistoryLayout() {
+    const [history, setHistory] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { setFeedbackFromError } = useContext(FeedbackContext);
+
+    useEffect(() => {
+        API.getHistory()
+            .then(data => setHistory(data))
+            .catch(err => setFeedbackFromError(err))
+            .finally(() => setLoading(false));
+    }, [setFeedbackFromError]);
+
+    if (loading) return <div className="text-center mt-5"><Spinner animation="border" variant="primary" /></div>;
+
+    return (
+        <Row className="justify-content-center mt-4">
+            <Col md={8}>
+                <Card className="pastel-card p-4">
+                    <h2 className="text-center mb-4" style={{ color: 'var(--bs-primary)' }}>
+                        <i className="bi bi-clock-history"></i> My Play History
+                    </h2>
+                    <Table hover responsive className="text-center align-middle">
+                        <thead style={{ backgroundColor: '#e0f7fa', color: '#008080' }}>
+                            <tr>
+                                <th>Game #</th>
+                                <th>Date & Time</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {history.map((game, idx) => (
+                                <tr key={game.id}>
+                                    <td className="text-muted">{history.length - idx}</td>
+                                    <td>{dayjs(game.timestamp).format('MMMM D, YYYY - HH:mm')}</td>
+                                    <td className="fw-bold">
+                                        {game.score} <i className="bi bi-coin text-warning"></i>
+                                    </td>
+                                </tr>
+                            ))}
+                            {history.length === 0 && (
+                                <tr><td colSpan="3" className="py-4 text-muted">You haven't played any games yet!</td></tr>
                             )}
                         </tbody>
                     </Table>

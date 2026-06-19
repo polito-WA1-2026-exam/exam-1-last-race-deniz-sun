@@ -16,6 +16,7 @@ export default function Header(props) {
                         {props.loggedIn && (
                             <>
                                 <Nav.Link as={NavLink} to="/play">Play Game</Nav.Link>
+                                <Nav.Link as={NavLink} to="/history">History</Nav.Link>
                                 <Nav.Link as={NavLink} to="/rankings">Leaderboard</Nav.Link>
                             </>
                         )}

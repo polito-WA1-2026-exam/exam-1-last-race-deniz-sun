@@ -62,14 +62,19 @@ app.post('/api/sessions', function(req, res, next) {
         if (!user) return res.status(401).json({ error: info.message });
         req.login(user, (err) => {
             if (err) return next(err);
-            return res.json(req.user);
+            const safeUser = {
+                id: req.user.id,
+                username: req.user.username
+            };
+            return res.json(safeUser);
         });
     })(req, res, next);
 });
 
 app.get('/api/sessions/current', (req, res) => {
     if (req.isAuthenticated()) res.status(200).json(req.user);
-    else res.status(401).json({ error: 'Not authenticated' });
+    // instead of error, return a success with authentication: false
+    else res.status(200).json({  isAuthenticated: false });
 });
 
 app.delete('/api/sessions/current', (req, res) => {
@@ -94,6 +99,15 @@ app.get('/api/rankings', isLoggedIn, async (req, res) => {
     try {
         const rankings = await dao.getRankings();
         res.json(rankings);
+    } catch (err) {
+        res.status(500).json({ error: 'Database error' });
+    }
+});
+
+app.get('/api/games/history', isLoggedIn, async (req, res) => {
+    try {
+        const history = await dao.getUserHistory(req.user.id);
+        res.json(history);
     } catch (err) {
         res.status(500).json({ error: 'Database error' });
     }

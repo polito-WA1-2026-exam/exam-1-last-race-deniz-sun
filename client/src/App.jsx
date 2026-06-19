@@ -12,7 +12,7 @@ import API from "./api/api.js";
 
 
 import GameManager from './components/GameManager.jsx'; 
-import { HomeLayout, RankingsLayout } from './components/StaticLayouts.jsx';
+import { HomeLayout, RankingsLayout, HistoryLayout } from './components/StaticLayouts.jsx';
 
 // Context
 import React from 'react';
@@ -32,8 +32,13 @@ function App() {
         // Check session on load
         API.getUserInfo()
             .then(user => {
-                setLoggedIn(true);
-                setUser(user);
+                if (user.isAuthenticated === false) {
+                    setLoggedIn(false);
+                    setUser(null);
+                } else {
+                    setLoggedIn(true);
+                    setUser(user);
+                }
             })
             .catch(e => {
                 setLoggedIn(false);
@@ -73,6 +78,10 @@ function App() {
                         
                         <Route path="/rankings" element={
                             !loggedIn ? <Navigate replace to='/login' /> : <RankingsLayout />
+                        } />
+
+                        <Route path="/history" element={
+                            !loggedIn ? <Navigate replace to='login' /> : <HistoryLayout />
                         } />
 
                         <Route path="/login" element={ 

@@ -32,6 +32,11 @@ const getRankings = async () => {
         .then(handleInvalidResponse).then(response => response.json());
 };
 
+const getHistory = async () => {
+    return await fetch(SERVER_URL + '/games/history', { credentials: 'include' })
+        .then(handleInvalidResponse).then(response => response.json());
+};
+
 const initGame = async () => {
     return await fetch(SERVER_URL + '/games/init', { 
         method: 'POST', 
@@ -57,5 +62,5 @@ function handleInvalidResponse(response) {
     return response;
 }
 
-const API = { logIn, getUserInfo, logOut, getNetwork, getRankings, initGame, submitGame };
+const API = { logIn, getUserInfo, logOut, getNetwork, getRankings, initGame, submitGame, getHistory };
 export default API;
