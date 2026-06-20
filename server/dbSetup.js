@@ -98,34 +98,32 @@ async function setupDatabase() {
     await db.exec(`
         -- Red Line (1)
         INSERT INTO line_stations (line_id, station_id, stop_number) VALUES
-        (1, 1, 1),  -- Centrale
-        (1, 2, 2),  -- Porta Velaria
+        (1, 1, 1),  -- Centrale (Interchange)
+        (1, 2, 2),  -- Porta Velaria (Interchange)
         (1, 3, 3),  -- Crocevia del Falco
-        (1, 4, 4);  -- Piazza delle Lanterne
+        (1, 4, 4);  -- Piazza delle Lanterne (Interchange)
 
         -- Blue Line (2)
         INSERT INTO line_stations (line_id, station_id, stop_number) VALUES
-        (2, 1, 1),  -- Centrale (Interchange!)
-        (2, 5, 2),  -- Fontana Oscura
+        (2, 1, 1),  -- Centrale (Interchange)
+        (2, 5, 2),  -- Fontana Oscura (Interchange)
         (2, 6, 3),  -- Borgo Sereno
         (2, 7, 4);  -- Viale dei Mosaici
 
         -- Green Line (3)
         INSERT INTO line_stations (line_id, station_id, stop_number) VALUES
-        (3, 2, 1),  -- Porta Velaria (Interchange!)
-        (3, 5, 2),  -- Fontana Oscura (Interchange!)
-        (3, 8, 3),  -- Torre Cinerea
-        (3, 9, 4),  -- Campo dell'Eco
-        (3, 10, 5); -- Stazione Nord
+        (3, 2, 1),  -- Porta Velaria (Interchange)
+        (3, 5, 2),  -- Fontana Oscura (Interchange)
+        (3, 8, 3),  -- Torre Cinerea (Interchange)
+        (3, 9, 4);  -- Campo dell'Eco
 
         -- Yellow Line (4)
         INSERT INTO line_stations (line_id, station_id, stop_number) VALUES
-        (4, 4, 1),  -- Piazza delle Lanterne (Interchange!)
-        (4, 8, 2),  -- Torre Cinerea (Interchange!)
-        (4, 7, 3),  -- Viale dei Mosaici (Interchange!)
-        (4, 9, 4),  -- Campo dell'Eco (Interchange!)
-        (4, 11, 5), -- Parco Ovest
-        (4, 12, 6); -- Scalo Est
+        (4, 4, 1),  -- Piazza delle Lanterne (Interchange)
+        (4, 8, 2),  -- Torre Cinerea (Interchange)
+        (4, 10, 3), -- Stazione Nord
+        (4, 11, 4), -- Parco Ovest
+        (4, 12, 5); -- Scalo Est
     `);
 
     await db.exec(`

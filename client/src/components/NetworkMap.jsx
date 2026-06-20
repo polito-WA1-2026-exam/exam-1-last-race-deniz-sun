@@ -19,9 +19,9 @@ const layout = {
     4: { x: 80, y: 90, labelX: 85, labelY: 91.5, anchor: 'start' },  // Piazza delle Lanterne
     
     // Bottom Tails
-    10: { x: 50, y: 115, labelX: 50, labelY: 123, anchor: 'middle' }, // Stazione Nord
-    11: { x: 80, y: 115, labelX: 80, labelY: 123, anchor: 'middle' }, // Parco Ovest
-    12: { x: 105, y: 115, labelX: 105, labelY: 108, anchor: 'middle' },// Scalo Est
+    10: { x: 20, y: 115, labelX: 15, labelY: 116.5, anchor: 'end' },  // Stazione Nord
+    11: { x: 50, y: 115, labelX: 50, labelY: 123, anchor: 'middle' }, // Parco Ovest
+    12: { x: 80, y: 115, labelX: 85, labelY: 116.5, anchor: 'start' },// Scalo Est
 };
 
 const getPastelColor = (colorStr) => {
