@@ -17,6 +17,7 @@ import { HomeLayout, RankingsLayout, HistoryLayout } from './components/StaticLa
 // Context
 import React from 'react';
 export const FeedbackContext = React.createContext();
+export const NetworkContext = React.createContext();
 
 function App() {
     const navigate = useNavigate();
@@ -24,13 +25,14 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true); // Prevents flickering on refresh
     const [feedback, setFeedback] = useState('');
+    const [network, setNetwork] = useState(null);
 
     const setFeedbackFromError = (err) => {
         setFeedback(err.message || "Unknown Error");
     };
 
     useEffect(() => {
-        // Check session on load
+        // check session on load
         API.getUserInfo()
             .then(user => {
                 if (user.isAuthenticated === false) {
@@ -39,6 +41,7 @@ function App() {
                 } else {
                     setLoggedIn(true);
                     setUser(user);
+                    API.getNetwork().then(setNetwork).catch(setFeedbackFromError);
                 }
             })
             .catch(e => {
@@ -53,6 +56,7 @@ function App() {
         setUser(user); 
         setLoggedIn(true);
         setFeedback(`Welcome back, ${user.username}!`);
+        API.getNetwork().then(setNetwork).catch(setFeedbackFromError);
     };
 
     const handleLogout = async () => {
@@ -67,42 +71,45 @@ function App() {
 
     return (
         <FeedbackContext.Provider value={{ setFeedback, setFeedbackFromError }}>
-            <div className="min-vh-100 d-flex flex-column">
-                <Header logout={handleLogout} user={user} loggedIn={loggedIn} />
-                
-                <Container fluid className="flex-grow-1 d-flex flex-column mt-3">
-                    <Routes>
-                        <Route path="/" element={<HomeLayout loggedIn={loggedIn} />} />
-                        
-                        <Route path="/play" element={
-                            !loggedIn ? <Navigate replace to='/login' /> : <GameManager />
-                        } />
-                        
-                        <Route path="/rankings" element={
-                            !loggedIn ? <Navigate replace to='/login' /> : <RankingsLayout />
-                        } />
+            <NetworkContext.Provider value={network}>
 
-                        <Route path="/history" element={
-                            !loggedIn ? <Navigate replace to='login' /> : <HistoryLayout />
-                        } />
+                <div className="min-vh-100 d-flex flex-column">
+                    <Header logout={handleLogout} user={user} loggedIn={loggedIn} />
+                    
+                    <Container fluid className="flex-grow-1 d-flex flex-column mt-3">
+                        <Routes>
+                            <Route path="/" element={<HomeLayout loggedIn={loggedIn} />} />
+                            
+                            <Route path="/play" element={
+                                !loggedIn ? <Navigate replace to='/login' /> : <GameManager />
+                            } />
+                            
+                            <Route path="/rankings" element={
+                                !loggedIn ? <Navigate replace to='/login' /> : <RankingsLayout />
+                            } />
 
-                        <Route path="/login" element={ 
-                            loggedIn ? <Navigate replace to='/' /> : <LoginForm login={handleLogin} />
-                        } />
+                            <Route path="/history" element={
+                                !loggedIn ? <Navigate replace to='login' /> : <HistoryLayout />
+                            } />
 
-                        <Route path="*" element={<h2 className="text-center mt-5">404 - Page not found!</h2>} />
-                    </Routes>
-                </Container>
+                            <Route path="/login" element={ 
+                                loggedIn ? <Navigate replace to='/' /> : <LoginForm login={handleLogin} />
+                            } />
 
-                <Toast 
-                    show={feedback !== ''} 
-                    autohide onClose={() => setFeedback('')} 
-                    delay={4000} position="bottom-end" 
-                    className="position-fixed bottom-0 end-0 m-3"
-                >
-                    <ToastBody>{feedback}</ToastBody>
-                </Toast>
-            </div>
+                            <Route path="*" element={<h2 className="text-center mt-5">404 - Page not found!</h2>} />
+                        </Routes>
+                    </Container>
+
+                    <Toast 
+                        show={feedback !== ''} 
+                        autohide onClose={() => setFeedback('')} 
+                        delay={4000} position="bottom-end" 
+                        className="position-fixed bottom-0 end-0 m-3"
+                    >
+                        <ToastBody>{feedback}</ToastBody>
+                    </Toast>
+                </div>
+            </NetworkContext.Provider>
         </FeedbackContext.Provider>
     );
 }

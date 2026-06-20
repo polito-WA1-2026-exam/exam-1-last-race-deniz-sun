@@ -44,12 +44,12 @@ const initGame = async () => {
     }).then(handleInvalidResponse).then(response => response.json());
 };
 
-const submitGame = async (gameData, route) => {
+const submitGame = async (route) => {
     return await fetch(SERVER_URL + '/games/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ gameData, route })
+        body: JSON.stringify({ route })
     }).then(handleInvalidResponse).then(response => response.json());
 };
 

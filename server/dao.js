@@ -3,12 +3,9 @@ import { open } from 'sqlite';
 import crypto from 'crypto';
 
 
-let db;
-open({
+const db = await open({
     filename: 'last_race.sqlite',
     driver: sqlite3.Database
-}).then(database => {
-    db = database;
 });
 
 //  AUTHENTICATION 
