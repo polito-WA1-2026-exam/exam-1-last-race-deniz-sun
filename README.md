@@ -94,40 +94,14 @@
 - `HistoryLayout` (in `StaticLayouts.jsx`): Displays the history of all past games played by the currently logged-in user.
 
 ## Screenshots
-- **Non-user Home Page**: Displays the landing page for unauthenticated users.
-  ![Non-user Home Page](./img/non-user-home.png)
 
-- **Login Page**: Allows users to authenticate with their credentials.
-  ![Login Page](./img/loginform.png)
-
-- **Login Home Page**: Displays the home page for logged-in users.
-  ![Login Home Page](./img/login-home.png)
-
-### Game Phases
-- **Setup Phase**: Displays the network map and game rules.
-  ![Setup Phase](./img/setupphase.png)
-
-- **Planning Phase (Step 1)**: Allows the user to start building a route.
-  ![Planning Phase 1](./img/planningphase1.png)
-
-- **Planning Phase (Step 2)**: Shows the progress of route building.
+- **Game Screen**
   ![Planning Phase 2](./img/planningphase2.png)
 
-- **Execution Phase**: Animates the journey step-by-step with event logs.
-  ![Execution Phase](./img/executionphase.png)
-
-- **Game Over (Failure)**: Displays the result when the route is invalid or incomplete.
-  ![Game Over](./img/gameover.png)
-
-- **Game Over (Success)**: Displays the result when the route is valid and completed successfully.
-  ![Success](./img/success.png)
-
-### Rankings and History
-- **Rankings Page**: Displays the leaderboard with the highest scores of all users.
+- **Rankings Page**
   ![Rankings Page](./img/rankings.png)
 
-- **History Page**: Shows the history of past games played by the logged-in user.
-  ![History Page](./img/history.png)
+
 
 ## Users Credentials
 
