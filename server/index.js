@@ -254,14 +254,8 @@ app.post('/api/games/submit', isLoggedIn, async (req, res) => {
     }
 });
 
-// initialize cache before starting the server
 initializeNetworkCache().then(() => {
     app.listen(port, () => {
         console.log(`Server running at http://localhost:${port}`);
     });
-});
-
-
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
 });
