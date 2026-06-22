@@ -23,6 +23,24 @@
 - GET `/api/network`
   - Request parameters: None
   - Response body: `{ "stations": [...], "segments": [...] }` (Contains all stations and valid connecting segments).
+  - Example: {"stations": [
+        {
+            "id": 1,
+            "name": "Centrale"
+        }, ...
+      ],
+       "segments": [
+        {
+            "stationA_id": 1,
+            "stationA_name": "Centrale",
+            "stationB_id": 2,
+            "stationB_name": "Porta Velaria",
+            "line_name": "Red Line",
+            "line_color": "red"
+        }, ...
+       ]
+
+  }
 - GET `/api/rankings`
   - Request parameters: None
   - Response body: `[{ "username": "blossom", "best_score": 22 }, ...]`
@@ -32,9 +50,25 @@
 - POST `/api/games/init`
   - Request parameters: None
   - Response body: `{ "startStation": {...}, "destStation": {...} }`. (Also securely saves the active game in `req.session`).
+  - Example: {
+    "startStation": {
+        "id": 3,
+        "name": "Crocevia del Falco"
+    },
+    "destStation": {
+        "id": 10,
+        "name": "Stazione Nord"
+    }
+}
 - POST `/api/games/submit`
   - Request body: `{ "route": [{ "stationA_id": 1, "stationB_id": 2, ... }, ...] }`
   - Response body: `{ "success": true, "finalScore": 21, "log": [...] }` (Or `success: false` if the route is invalid).
+  - Example: {
+    "success": false,
+    "message": "Your route was incomplete, disconnected, or used invalid tracks. You got lost in the underground!",
+    "finalScore": 0,
+    "log": []
+}
 
 ## Database Tables
 
@@ -48,10 +82,16 @@
 ## Main React Components
 
 - `GameManager` (in `GameManager.jsx`): Manages the state machine (`setup`, `planning`, `execution`, `result`) and handles the API calls for initializing and submitting the game.
-- `PlanningPhase` (in `PlanningPhase.jsx`): Implements the 90-second countdown timer, manages the selected vs available segments pools, and handles the logic for flipping segments directionally.
+- `SetupPhase` (in `GamePhases.jsx`): Displays the network map and game rules, allowing the user to start the game.
+- `PlanningPhase` (in `PlanningPhase.jsx`): Implements the 90-second countdown timer, manages the selected vs available segments pools, and handles the logic for flipping segments directionally. This is where the actual game logic happens for the user side.
 - `ExecutionPhase` (in `GamePhases.jsx`): Progressively renders the server's event log array using `setTimeout` to create a step-by-step animation of the journey.
+- `ResultPhase` (in `GamePhases.jsx`): Displays the final score and result of the game, with options to play again or return to the home page.
 - `NetworkMap` (in `NetworkMap.jsx`): Dynamically renders an SVG planar graph of the underground network using pre-calculated coordinates to prevent line-crossing, applying CSS drop-shadows and pastel colors.
+- `Header` (in `Header.jsx`): Displays the navigation bar, including links to the home page, rankings, and user authentication options.
 - `Auth` (in `Auth.jsx`): Contains the `LoginForm`, `LoginButton`, and `LogoutButton` components for handling user authentication via context.
+- `HomeLayout` (in `StaticLayouts.jsx`): Provides reusable layouts for static pages such as the home page, rankings, and history.
+- `RankingsLayout` (in `StaticLayouts.jsx`): Displays the leaderboard with the highest scores of all registered users.
+- `HistoryLayout` (in `StaticLayouts.jsx`): Displays the history of all past games played by the currently logged-in user.
 
 ## Screenshots
 

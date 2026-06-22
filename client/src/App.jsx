@@ -60,11 +60,16 @@ function App() {
     };
 
     const handleLogout = async () => {
-        await API.logOut();
+        try {
+            await API.logOut();
+        } catch (err) {
+            console.error(err); 
+        }
+        navigate('/'); 
+
         setLoggedIn(false); 
         setUser(null);
         setFeedback("Logged out successfully.");
-        navigate('/'); 
     };
 
     if (loading) return <div className="vh-100 d-flex justify-content-center align-items-center"><Spinner animation="border" variant="primary" /></div>;
@@ -89,7 +94,7 @@ function App() {
                             } />
 
                             <Route path="/history" element={
-                                !loggedIn ? <Navigate replace to='login' /> : <HistoryLayout />
+                                !loggedIn ? <Navigate replace to='/login' /> : <HistoryLayout />
                             } />
 
                             <Route path="/login" element={ 
