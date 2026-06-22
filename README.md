@@ -94,9 +94,40 @@
 - `HistoryLayout` (in `StaticLayouts.jsx`): Displays the history of all past games played by the currently logged-in user.
 
 ## Screenshots
+- **Non-user Home Page**: Displays the landing page for unauthenticated users.
+  ![Non-user Home Page](./img/non-user-home.png)
 
-![Game Phase](./img/game.jpg)
-![Ranking Page](./img/ranking.jpg)
+- **Login Page**: Allows users to authenticate with their credentials.
+  ![Login Page](./img/loginform.png)
+
+- **Login Home Page**: Displays the home page for logged-in users.
+  ![Login Home Page](./img/login-home.png)
+
+### Game Phases
+- **Setup Phase**: Displays the network map and game rules.
+  ![Setup Phase](./img/setupphase.png)
+
+- **Planning Phase (Step 1)**: Allows the user to start building a route.
+  ![Planning Phase 1](./img/planningphase1.png)
+
+- **Planning Phase (Step 2)**: Shows the progress of route building.
+  ![Planning Phase 2](./img/planningphase2.png)
+
+- **Execution Phase**: Animates the journey step-by-step with event logs.
+  ![Execution Phase](./img/executionphase.png)
+
+- **Game Over (Failure)**: Displays the result when the route is invalid or incomplete.
+  ![Game Over](./img/gameover.png)
+
+- **Game Over (Success)**: Displays the result when the route is valid and completed successfully.
+  ![Success](./img/success.png)
+
+### Rankings and History
+- **Rankings Page**: Displays the leaderboard with the highest scores of all users.
+  ![Rankings Page](./img/rankings.png)
+
+- **History Page**: Shows the history of past games played by the logged-in user.
+  ![History Page](./img/history.png)
 
 ## Users Credentials
 
@@ -108,7 +139,7 @@
 I utilized AI tools (Gemini) during the development of this project primarily as a helper for architectural design and debugging. 
 Specifically, I used AI to:
 1. Frontend: Create custom css and generate the geometric mathematical coordinates (`layout`) for the SVG `NetworkMap` component to ensure lines did not overlap in the UI. Clarify debugging concepts regarding React Strict Mode behaviors and `useEffect` timer cleanups.
-2. Database: Refine the SQLite DB initialization script to ensure the required constraints were met.
+2. Database: Refine the SQLite DB initialization script to ensure the required constraints were met. The example stations in the requirements are used and the rest are created by AI to be similar.
 3. Backend: Ensure the architecture complied with the requirements and for bug fixes. 
 
 All AI-generated logic was thoroughly reviewed, adapted, and manually verified by myself to ensure it adhered strictly to the course's requirements and best practices.
