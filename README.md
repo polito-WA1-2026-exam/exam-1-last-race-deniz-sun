@@ -1,5 +1,5 @@
 # Exam #1: "Last Race"
-## Student: s123456 LASTNAME FIRSTNAME 
+## Student: s352932 Sun Deniz 
 
 ## React Client Application Routes
 
